@@ -37,6 +37,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QApplication>
 #include <QtCharts/QValueAxis>
+#include <QLocale>
 
 #include "loan.h"
 
@@ -56,6 +57,7 @@ HomeLoanSplitter::~HomeLoanSplitter()
 
 void HomeLoanSplitter::onCalculateClicked()
 {
+    static QLocale locale = QLocale();
     m_ui->plainTextEditResult->clear();
     float totalLoan = m_ui->comboBoxTotalLoanAmount->itemData(m_ui->comboBoxTotalLoanAmount->currentIndex()).toFloat();
     float saving = m_ui->comboBoxSavingStart->itemData(m_ui->comboBoxSavingStart->currentIndex()).toFloat();
@@ -166,15 +168,15 @@ void HomeLoanSplitter::onCalculateClicked()
         auto yList = m_chart->axes(Qt::Vertical);
         yList[0]->setTitleText("Balance");
 
-        m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment Fixed Part:  $ %1").arg(bestMonthlyRepaymentFixed));
-        m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment Variable Part(max):  $ %1").arg(bestMaxMonthlyRepaymentVar));
-        m_ui->plainTextEditResult->appendHtml(QString("%1 Split Into Offset amount: $ %2 %3").arg("<p style=\"color:red\">").arg(bestOffset).arg("</p>"));
+        m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment Fixed Part:  %1").arg(locale.toCurrencyString(bestMonthlyRepaymentFixed, "$ ")));
+        m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment Variable Part(max):  %1").arg(locale.toCurrencyString(bestMaxMonthlyRepaymentVar, "$ ")));
+        m_ui->plainTextEditResult->appendHtml(QString("%1 Split Into Offset amount: %2 %3").arg("<p style=\"color:red\">").arg(locale.toCurrencyString(bestOffset, "$ ")).arg("</p>"));
         m_ui->plainTextEditResult->appendPlainText(QString("Split Part Interests Paied Off Term:  %1").arg(bestPaiedOffTerm));
         m_ui->plainTextEditResult->appendPlainText("Based On:");
-        m_ui->plainTextEditResult->appendPlainText(QString("    Total Loan: $ %1 | Total Term: %2 year(s)").arg(totalLoan).arg(totalLoanYears));
+        m_ui->plainTextEditResult->appendPlainText(QString("    Total Loan: %1 | Total Term: %2 year(s)").arg(locale.toCurrencyString(totalLoan, "$ ")).arg(totalLoanYears));
         m_ui->plainTextEditResult->appendPlainText(QString("    Fixed Rate: %1 % | Variable Rate: %2 %").arg(fixRateYear * 100.0).arg(varRateYear * 100.0));
-        m_ui->plainTextEditResult->appendPlainText(QString("    Fixed Term: %1 year(s) | Fixed amount: $ %2").arg(fixedYears).arg(totalLoan - bestOffset));
-        m_ui->plainTextEditResult->appendPlainText(QString("    Offset Saving base: $ %1 | OffSet Saving Inremental: $ %2").arg(saving).arg(savingIncremental));
+        m_ui->plainTextEditResult->appendPlainText(QString("    Fixed Term: %1 year(s) | Fixed amount: %2").arg(fixedYears).arg(locale.toCurrencyString(totalLoan - bestOffset, "$ ")));
+        m_ui->plainTextEditResult->appendPlainText(QString("    Offset Saving base: %1 | OffSet Saving Inremental: %2").arg(locale.toCurrencyString(saving, "$ ")).arg(locale.toCurrencyString(savingIncremental, "$ ")));
 
     }
     else // no best split, do normal repayment calc
@@ -196,9 +198,9 @@ void HomeLoanSplitter::onCalculateClicked()
 
         bestMonthlyRepaymentFixed = schedule[1].payment;
         m_ui->plainTextEditResult->appendPlainText("No Best Split option. Calculate the normal repayment.\n");
-        m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment:  $ %1").arg(bestMonthlyRepaymentFixed));
+        m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment:  %1").arg(locale.toCurrencyString(bestMonthlyRepaymentFixed, "$ ")));
         m_ui->plainTextEditResult->appendPlainText("Based On:");
-        m_ui->plainTextEditResult->appendPlainText(QString("    Total Loan:  $ %1").arg(totalLoan));
+        m_ui->plainTextEditResult->appendPlainText(QString("    Total Loan:  %1").arg(locale.toCurrencyString(totalLoan, "$ ")));
         m_ui->plainTextEditResult->appendPlainText(QString("    Interest Rate:  %1 %").arg(varRateYear * 100.0));
         m_ui->plainTextEditResult->appendPlainText(QString("    Total Term:  %1 year(s)").arg(totalLoanYears));
     }
@@ -207,24 +209,25 @@ void HomeLoanSplitter::onCalculateClicked()
 void HomeLoanSplitter::setup()
 {
     // setup total loan
-    setupComboBox(m_ui->comboBoxTotalLoanAmount, 500000, 1000000, 10000, 850000, "$ ");
+    setupComboBox(m_ui->comboBoxTotalLoanAmount, 500000, 10000000, 10000, 850000, "$ ");
+    m_ui->comboBoxTotalLoanAmount->addItem("Are u sure?", std::numeric_limits<float>().max()/10.f);
 
     // setup total loan period
     setupComboBox(m_ui->comboBoxTotalLoanPeriod, 1, 30, 1, 27, "", " year(s)");
 
     // setup var & fix interests
-    setupComboBox(m_ui->comboBoxVariableInterestRate, 1.00, 5.00, 0.01, 3.32, "", " %");
+    setupComboBox(m_ui->comboBoxVariableInterestRate, 1.00, 5.00, 0.01, 2.65, "", " %");
     setupComboBox(m_ui->comboBoxFixedInterestRate, 1.00, 5.00, 0.01, 1.94, "", " %");
 
     // setup fixed amount/term
-    setupComboBox(m_ui->comboBoxOffsetAmount, 0, 1000000, 10000, 0, "$ ");
+    setupComboBox(m_ui->comboBoxOffsetAmount, 0, 10000000, 10000, 0, "$ ");
     m_ui->comboBoxOffsetAmount->insertItem(0, "Find Me The Best", -1.f);
     m_ui->comboBoxOffsetAmount->setCurrentIndex(0);
     setupComboBox(m_ui->comboBoxFixedTerm, 0, 5, 1, 2, "", " year(s)");
 
     // setup saving start and incremental
-    setupComboBox(m_ui->comboBoxSavingStart, 0, 100000, 10000, 20000, "$ ");
-    setupComboBox(m_ui->comboBoxSavingIncremental, 0, 10000, 1000, 6000, "$ ");
+    setupComboBox(m_ui->comboBoxSavingStart, 0, 1000000, 10000, 20000, "$ ");
+    setupComboBox(m_ui->comboBoxSavingIncremental, 0, 100000, 1000, 6000, "$ ");
 
     connect(m_ui->comboBoxTotalLoanAmount, &QComboBox::currentIndexChanged, this, &HomeLoanSplitter::onCalculateClicked);
     connect(m_ui->comboBoxTotalLoanPeriod, &QComboBox::currentIndexChanged, this, &HomeLoanSplitter::onCalculateClicked);
@@ -245,10 +248,18 @@ void HomeLoanSplitter::setup()
 
 void HomeLoanSplitter::setupComboBox(QComboBox* comboBox, float startValue, float endValue, float step, float defultValue, QString prefix, QString surfix)
 {
+    static QLocale locale = QLocale();
     int index = static_cast<int>((defultValue - startValue) / step);
     for(float data = startValue; data <= endValue; data += step)
     {
-        comboBox->addItem(QString("%1%2%3").arg(prefix).arg(data).arg(surfix), data);
+        if (prefix.startsWith('$'))
+        {
+            comboBox->addItem(QString("%1%2").arg(locale.toCurrencyString(data, prefix)).arg(surfix), data);
+        }
+        else
+        {
+            comboBox->addItem(QString("%1%2%3").arg(prefix).arg(data).arg(surfix), data);
+        }
     }
     comboBox->setCurrentIndex(index);
 }

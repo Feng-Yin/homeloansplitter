@@ -6,229 +6,250 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>845</width>
-    <height>560</height>
+    <width>574</width>
+    <height>756</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>10</verstretch>
+   </sizepolicy>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayoutMostOuter">
-     <item>
-      <widget class="QGroupBox" name="groupBoxTotalLoanDetails">
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="title">
-        <string>Total Loan Details :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignJustify|Qt::AlignVCenter</set>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-       <property name="checkable">
-        <bool>false</bool>
-       </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>554</width>
+        <height>736</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayoutMostOuter">
+         <item>
+          <widget class="QGroupBox" name="groupBoxTotalLoanDetails">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="title">
+            <string>Total Loan Details :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QLabel" name="labelTotalLoanAmount">
-              <property name="text">
-               <string>Total Loan Amount</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelTotalLoanPeriod">
-              <property name="minimumSize">
-               <size>
-                <width>101</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Total Loan Period (years)</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <widget class="QComboBox" name="comboBoxTotalLoanAmount"/>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxTotalLoanPeriod"/>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBoxLoanSplit">
-       <property name="title">
-        <string>Loan Split Details :</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <widget class="QLabel" name="labelVariableInterestRate">
-              <property name="minimumSize">
-               <size>
-                <width>101</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Variable Interest Rate (%)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelFixedInterestRate">
-              <property name="minimumSize">
-               <size>
-                <width>101</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Fixed Interest Rate (%)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOffsetAmount">
-              <property name="minimumSize">
-               <size>
-                <width>101</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Split Into Offset Amount</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelFixedTerm">
-              <property name="minimumSize">
-               <size>
-                <width>101</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Fixed Term (years)</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                 <widget class="QLabel" name="labelTotalLoanAmount">
+                  <property name="text">
+                   <string>Total Loan Amount</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelTotalLoanPeriod">
+                  <property name="minimumSize">
+                   <size>
+                    <width>101</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Total Loan Period (years)</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <widget class="QComboBox" name="comboBoxTotalLoanAmount"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBoxTotalLoanPeriod"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-             <widget class="QComboBox" name="comboBoxVariableInterestRate"/>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxFixedInterestRate"/>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxOffsetAmount"/>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxFixedTerm"/>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxLoanSplit">
+           <property name="title">
+            <string>Loan Split Details :</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <widget class="QLabel" name="labelVariableInterestRate">
+                  <property name="minimumSize">
+                   <size>
+                    <width>101</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Variable Interest Rate (%)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelFixedInterestRate">
+                  <property name="minimumSize">
+                   <size>
+                    <width>101</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Fixed Interest Rate (%)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelOffsetAmount">
+                  <property name="minimumSize">
+                   <size>
+                    <width>101</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Split Into Offset Amount</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelFixedTerm">
+                  <property name="minimumSize">
+                   <size>
+                    <width>101</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Fixed Term (years)</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QComboBox" name="comboBoxVariableInterestRate"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBoxFixedInterestRate"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBoxOffsetAmount"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBoxFixedTerm"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBoxSavingDetails">
-       <property name="title">
-        <string>Offset Account Details :</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <item>
-             <widget class="QLabel" name="labelSavingStart">
-              <property name="text">
-               <string>Saving Start</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelSavingIncremental">
-              <property name="text">
-               <string>Saving Incremental Monthly</string>
-              </property>
-             </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxSavingDetails">
+           <property name="title">
+            <string>Offset Account Details :</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <widget class="QLabel" name="labelSavingStart">
+                  <property name="text">
+                   <string>Saving Start</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelSavingIncremental">
+                  <property name="text">
+                   <string>Saving Incremental Monthly</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <widget class="QComboBox" name="comboBoxSavingStart"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBoxSavingIncremental"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_7">
-            <item>
-             <widget class="QComboBox" name="comboBoxSavingStart"/>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxSavingIncremental"/>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QProgressBar" name="progressBarCalc">
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="progressBarCalc">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPlainTextEdit" name="plainTextEditResult">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>5</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="undoRedoEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::NoTextInteraction</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="plainTextEditResult">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="undoRedoEnabled">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::NoTextInteraction</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>

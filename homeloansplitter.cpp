@@ -38,6 +38,8 @@
 #include <QtWidgets/QApplication>
 #include <QtCharts/QValueAxis>
 #include <QLocale>
+#include <QScrollBar>
+#include <QScroller>
 
 #include "loan.h"
 
@@ -161,13 +163,6 @@ void HomeLoanSplitter::onCalculateClicked()
         seriesFixEnd->append(index, fixedSchedule1[index].balance + offsetSchedule[index].balance);
         m_chart->addSeries(seriesFixEnd);
 
-        m_chart->createDefaultAxes();
-
-        auto xList = m_chart->axes(Qt::Horizontal);
-        xList[0]->setTitleText("Months");
-        auto yList = m_chart->axes(Qt::Vertical);
-        yList[0]->setTitleText("Balance");
-
         m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment Fixed Part:  %1").arg(locale.toCurrencyString(bestMonthlyRepaymentFixed, "$ ")));
         m_ui->plainTextEditResult->appendPlainText(QString("Monthly Repayment Variable Part(max):  %1").arg(locale.toCurrencyString(bestMaxMonthlyRepaymentVar, "$ ")));
         m_ui->plainTextEditResult->appendHtml(QString("%1 Split Into Offset amount: %2 %3").arg("<p style=\"color:red\">").arg(locale.toCurrencyString(bestOffset, "$ ")).arg("</p>"));
@@ -189,12 +184,6 @@ void HomeLoanSplitter::onCalculateClicked()
             seriesBalance->append(schedule[index].number, schedule[index].balance);
         }
         m_chart->addSeries(seriesBalance);
-        m_chart->createDefaultAxes();
-
-        auto xList = m_chart->axes(Qt::Horizontal);
-        xList[0]->setTitleText("Months");
-        auto yList = m_chart->axes(Qt::Vertical);
-        yList[0]->setTitleText("Balance");
 
         bestMonthlyRepaymentFixed = schedule[1].payment;
         m_ui->plainTextEditResult->appendPlainText("No Best Split option. Calculate the normal repayment.\n");
@@ -204,6 +193,21 @@ void HomeLoanSplitter::onCalculateClicked()
         m_ui->plainTextEditResult->appendPlainText(QString("    Interest Rate:  %1 %").arg(varRateYear * 100.0));
         m_ui->plainTextEditResult->appendPlainText(QString("    Total Term:  %1 year(s)").arg(totalLoanYears));
     }
+
+    m_chart->createDefaultAxes();
+    m_chart->axes(Qt::Horizontal).first()->setRange(0, totalLoanYears * monthsPerYear);
+    m_chart->axes(Qt::Vertical).first()->setRange(0, totalLoan);
+
+    QValueAxis *axisX = qobject_cast<QValueAxis*>(m_chart->axes(Qt::Horizontal).first());
+    axisX->setTitleText("Months");
+    axisX->setLabelFormat("%d");
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(m_chart->axes(Qt::Vertical).first());
+    axisY->setTitleText("Balance");
+    axisY->applyNiceNumbers();
+
+    m_ui->plainTextEditResult->moveCursor(QTextCursor::Start);
+    m_ui->plainTextEditResult->ensureCursorVisible();
+
 }
 
 void HomeLoanSplitter::setup()
@@ -237,13 +241,20 @@ void HomeLoanSplitter::setup()
     connect(m_ui->comboBoxFixedTerm, &QComboBox::currentIndexChanged, this, &HomeLoanSplitter::onCalculateClicked);
     connect(m_ui->comboBoxSavingStart, &QComboBox::currentIndexChanged, this, &HomeLoanSplitter::onCalculateClicked);
     connect(m_ui->comboBoxSavingIncremental, &QComboBox::currentIndexChanged, this, &HomeLoanSplitter::onCalculateClicked);
+    QScroller::grabGesture(m_ui->plainTextEditResult, QScroller::TouchGesture);
 
     m_chart = new QChart();
-    m_chart->setTitle("Loan Balance Chart");
+    //m_chart->setTitle("Loan Balance Chart");
     //m_chart->legend()->hide();
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
-    m_ui->verticalLayoutMostOuter->addWidget(m_chartView);
+    m_ui->verticalLayoutMostOuter->addWidget(m_chartView, 10);
+
+    // hide scrollbars
+    m_ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    // configure gesture and add rubberband effect
+    QScroller::grabGesture(m_ui->scrollArea, QScroller::LeftMouseButtonGesture);
 }
 
 void HomeLoanSplitter::setupComboBox(QComboBox* comboBox, float startValue, float endValue, float step, float defultValue, QString prefix, QString surfix)
